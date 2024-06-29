@@ -16,8 +16,6 @@ const client = new Client({
 // It makes some properties non-nullable.
 client.once(Events.ClientReady, readyClient => {
     console.log(`Ready! Logged in as ${readyClient.user.tag}`);
-    // console.log(`Servers Available: ${readyClient.fetchInvite}`);
-    readyClient.guilds
 });
 
 client.on('guildAvailable', (guild) => {
