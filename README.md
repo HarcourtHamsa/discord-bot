@@ -9,4 +9,4 @@ Discord.js
 
 ### Sample bot invite link
 
-https://discord.com/api/oauth2/authorize?client_id=1223441883506675833&permissions=0&scope=bot%20applications.commands
+https://discord.com/oauth2/authorize?client_id=1256551054603059250
