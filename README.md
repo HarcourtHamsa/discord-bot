@@ -1,4 +1,4 @@
-# Disord Bot Ducmentation
+# Discord Bot Docmentation
 
 This is a discord bot that sends messages to the admin whenver a user joins a server
 
@@ -7,6 +7,6 @@ This is a discord bot that sends messages to the admin whenver a user joins a se
 Node.js
 Discord.js
 
-### Discord bot invite link
+### Sample bot invite link
 
 https://discord.com/api/oauth2/authorize?client_id=123456789012345678&permissions=0&scope=bot%20applications.commands
