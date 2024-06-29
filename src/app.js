@@ -1,5 +1,16 @@
 const { Client, Events, IntentsBitField } = require('discord.js')
+const express = require('express');
 require('dotenv').config();
+
+
+const app = express()
+
+
+const PORT = process.env.PORT | 8000;
+
+app.get('/', function (req, res) {
+    res.send('Discord Bot Running')
+})
 
 const client = new Client({
     intents: [
@@ -35,3 +46,7 @@ client.on('guildMemberAdd', (member) => {
 client.login(
     process.env.DISCORD_TOKEN
 )
+
+app.listen(PORT, () => {
+    console.log(`App is running on port: ${PORT}`);
+})
