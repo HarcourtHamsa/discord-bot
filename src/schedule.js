@@ -10,7 +10,7 @@ selfBotClient.once('ready', () => {
 })
 
 // Schedule the cron job to run every 20 minutes
-cron.schedule('*/1 * * * *', async () => {
+cron.schedule('*/20 * * * *', async () => {
     console.log('Running cron job to fetch guild members');
     await fetchGuildMembers(process.env.GUILD_ID, selfBotClient);
 });

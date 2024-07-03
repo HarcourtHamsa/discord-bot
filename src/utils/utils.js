@@ -40,30 +40,18 @@ async function fetchGuildMembers(id, selfBotClient) {
             const noChangesMade = isEqualSet(existingMemberNames, updatedMemberNames);
 
             if (noChangesMade) {
-                console.log("No new members")
+                console.log("No new members");
                 return;
             }
 
-            // Write the updated members list to the JSON file
-            try {
-                await fs.writeFile(filePath, JSON.stringify(updatedMembers, null, 2), 'utf8');
-            } catch (error) {
-                console.log(error);
+            await fs.writeFile(filePath, JSON.stringify(updatedMembers, null, 2), 'utf8');
+
+            if (newMembers.length > 0) {
+                const newMemberNames = newMembers.map(member => member.user.username).join(', ');
+                await sendMessage(selfBotClient, newMemberNames);
             }
 
-            // Send a message to each new member
-            const promises = newMembers.map(async (member) => {
-                try {
-                    await sendMessage(selfBotClient, member.user.username);
-
-                } catch (error) {
-                    console.log(error)
-                }
-            });
-
-            await Promise.all(promises);
-
-            console.log('All messages sent successfully.');
+            console.log('Message sent successfully.');
         } catch (error) {
             console.error('Error fetching members:', error);
         }
@@ -72,11 +60,11 @@ async function fetchGuildMembers(id, selfBotClient) {
     }
 }
 
-async function sendMessage(selfBotClient, username) {
+async function sendMessage(selfBotClient, newMemberNames) {
     const user = await selfBotClient.users.cache.get(process.env.RECIPIENT_ACCOUNT_ID);
 
     if (user) {
-        user.send(`Hello, this is an automated message. A user with username ${username} just joined the server`)
+        user.send(`Hello, this is an automated message. The following users just joined the server: ${newMemberNames}`)
             .then(() => console.log('Message sent successfully ✅.'))
             .catch(console.error);
     } else {
