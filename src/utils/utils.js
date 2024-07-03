@@ -48,7 +48,7 @@ async function fetchGuildMembers(id, selfBotClient) {
 
             if (newMembers.length > 0) {
                 const newMemberNames = newMembers.map(member => member.user.username).join(', ');
-                await sendMessage(selfBotClient, newMemberNames);
+                await sendMessage(selfBotClient, guild.name, newMemberNames);
             }
 
             console.log('Message sent successfully.');
@@ -60,11 +60,11 @@ async function fetchGuildMembers(id, selfBotClient) {
     }
 }
 
-async function sendMessage(selfBotClient, newMemberNames) {
+async function sendMessage(selfBotClient, serverName, newMemberNames) {
     const user = await selfBotClient.users.cache.get(process.env.RECIPIENT_ACCOUNT_ID);
 
     if (user) {
-        user.send(`Hello, this is an automated message. The following users just joined the server: ${newMemberNames}`)
+        user.send(`Hello, this is an automated message. The following users just joined ${serverName} server: ${newMemberNames}`)
             .then(() => console.log('Message sent successfully ✅.'))
             .catch(console.error);
     } else {
