@@ -10,7 +10,6 @@ app.get('/', function (req, res) {
     res.send('Discord Bot Running')
 })
 
-
 app.listen(PORT, () => {
     console.log(`Server is running on port: ${PORT}`);
 })
