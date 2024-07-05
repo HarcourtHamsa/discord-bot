@@ -11,10 +11,8 @@ async function fetchGuildMembers(id, selfBotClient, creationDateTimestamp) {
         const { joinedTimestamp } = member.guild;
         const memberName = member.user.username;
 
-        if (!existingMemberNames.has(memberName)) {
-          if (creationDateTimestamp < joinedTimestamp) {
-            acc.push({ name: memberName });
-          }
+        if (creationDateTimestamp < joinedTimestamp) {
+          acc.push({ name: memberName });
         }
 
         return acc;
