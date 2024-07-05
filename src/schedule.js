@@ -9,7 +9,7 @@ selfBotClient.once("ready", () => {
   console.log("Self bot connected 🤖");
 });
 
-cron.schedule("*/5 * * * *", async () => {
+cron.schedule("*/2 * * * *", async () => {
   console.log("Running cron job");
   await fetchGuildMembers(
     process.env.GUILD_ID,

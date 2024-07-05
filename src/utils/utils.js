@@ -8,7 +8,7 @@ async function fetchGuildMembers(id, selfBotClient, creationDateTimestamp) {
       const members = await guild.members.fetch();
 
       const newMembers = members.reduce((acc, member) => {
-        const { joinedTimestamp } = member.guild;
+        const { joinedTimestamp } = member;
         const memberName = member.user.username;
 
         if (creationDateTimestamp < joinedTimestamp) {
@@ -40,9 +40,6 @@ async function sendMessage(selfBotClient, serverName, newMemberNames) {
       IntentsBitField.Flags.DirectMessages,
       IntentsBitField.Flags.GuildMembers,
     ],
-    presence: {
-      status: "invisible",
-    },
   });
 
   discordClient.once("ready", async () => {
