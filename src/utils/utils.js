@@ -7,20 +7,52 @@ async function fetchGuildMembers(id, selfBotClient, creationDateTimestamp) {
     try {
       const members = await guild.members.fetch();
 
+      // Path to the JSON file
+      const filePath = path.join(__dirname, 'members.json');
+
+      // Read the existing members from the JSON file
+      let existingMembers = [];
+
+      try {
+        const data = await fs.readFile(filePath, 'utf8');
+        existingMembers = JSON.parse(data);
+      } catch (error) {
+        if (error.code !== 'ENOENT') {
+          console.error('Error reading the JSON file:', error);
+          return;
+        }
+      }
+
+      // Convert existing members to a Set for quick lookup
+      const existingMemberNames = new Set(existingMembers.map(member => member.name));
+
       const newMembers = members.reduce((acc, member) => {
         const { joinedTimestamp } = member;
         const memberName = member.user.username;
 
-        if (creationDateTimestamp < joinedTimestamp) {
-          acc.push({ name: memberName });
+        if (!existingMemberNames.has(memberName)) {
+          if (creationDateTimestamp < joinedTimestamp) {
+            acc.push({ name: memberName });
+          }
         }
+
 
         return acc;
       }, []);
 
       console.log("%d new members", newMembers.length);
 
+
+
       if (newMembers.length > 0) {
+        // Add new members to the list
+        const updatedMembers = [
+          ...existingMembers,
+          ...newMembers,
+        ];
+
+        await fs.writeFile(filePath, JSON.stringify(updatedMembers, null, 2), 'utf8');
+
         const newMemberNames = newMembers
           .map((member) => member.name)
           .join("\n");
