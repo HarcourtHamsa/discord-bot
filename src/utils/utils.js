@@ -1,4 +1,6 @@
 const { Client, IntentsBitField } = require("discord.js");
+const fs = require('fs').promises;
+const path = require('path');
 
 async function fetchGuildMembers(id, selfBotClient, creationDateTimestamp) {
   const guild = await selfBotClient.guilds.cache.get(id);
